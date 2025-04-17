@@ -15,10 +15,12 @@ with open('birdNames.txt', 'w') as file:
     for currentName in birdNames:
         nameDict = get_bird_common_names(currentName)
         if nameDict['german'] == None:
-            file.write(f"{nameDict['latin']}:{missingGermanNames[nameDict['latin']]},{nameDict['english']}\n")
+            try:
+                file.write(f"{nameDict['latin']}:{missingGermanNames[nameDict['latin']]},{nameDict['english']}\n")
+            except KeyError:
+                print(f"{nameDict['latin']} does not have a German name, will be shown as 'None'")
+                file.write(f"{nameDict['latin']}:{nameDict['german']},{nameDict['english']}\n")
+                
         else:
             file.write(f"{nameDict['latin']}:{nameDict['german']},{nameDict['english']}\n")
-
-#print(get_name_from_file("birdnet_mobile_4209716759_recording_0.txt"))
-
 

@@ -16,4 +16,4 @@ Turdus merula:Amsel,Eurasian Blackbird / Common Blackbird
 Cyanistes caeruleus:Blaumeise,Eurasian Blue-Tit
 Dendrocopos major:Buntspecht,Great Spotted/Syrian Woodpecker
 Turdus pilaris:Wacholderdrossel,Fieldfare
-Regulus ignicapilla:Sommergoldhähnchen,Firecrest
+Regulus ignicapilla:None,Firecrest
