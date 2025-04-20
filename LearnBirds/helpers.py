@@ -42,15 +42,15 @@ def get_bird_common_names(latin_name):
     return names
 
 
-def get_name_from_file(fileName):
+def get_name_from_file(file_name):
     os.chdir("BirdSounds")
 
-    file = open(fileName)
+    file = open(file_name)
     line = file.readline()
-    startReadIndex = line.find("species")+len("species':'")
-    endReadIndex = line[startReadIndex:].find('"') + startReadIndex
+    start_read_index = line.find("species")+len("species':'")
+    end_read_index = line[start_read_index:].find('"') + start_read_index
     
-    species = line[startReadIndex:endReadIndex]
+    species = line[start_read_index:end_read_index]
     os.chdir("..")
     return species.split(";")[1]
 
@@ -62,3 +62,8 @@ def has_internet():
         return True
     except (requests.ConnectionError, requests.Timeout):
         return False
+
+def get_bird_number(file_name):
+    start_index = file_name.find("recording_") + len("recording_")
+    end_index = file_name.find(".")
+    return file_name[start_index:end_index]

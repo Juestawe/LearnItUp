@@ -1,26 +1,22 @@
 import glob
 from helpers import get_bird_common_names, get_name_from_file, has_internet, missingGermanNames
 import os
+from initiate import create_base_files, create_learning_list
+import random
+from pydub import AudioSegment
+from pydub.playback import play
 
-os.chdir("BirdSounds")
-textFiles = glob.glob("*.txt")
-os.chdir("..")
-birdNames = []
-for textFile in textFiles:
-    currentName = get_name_from_file(textFile)
-    if currentName not in birdNames:
-        birdNames.append(currentName)
+language = input("Which language will you be learning in?\nIn welcher Sprache möchtest du lernen?\neng/deu?\n")
+random.seed()
 
-with open('birdNames.txt', 'w') as file:
-    for currentName in birdNames:
-        nameDict = get_bird_common_names(currentName)
-        if nameDict['german'] == None:
-            try:
-                file.write(f"{nameDict['latin']}:{missingGermanNames[nameDict['latin']]},{nameDict['english']}\n")
-            except KeyError:
-                print(f"{nameDict['latin']} does not have a German name, will be shown as 'None'")
-                file.write(f"{nameDict['latin']}:{nameDict['german']},{nameDict['english']}\n")
-                
-        else:
-            file.write(f"{nameDict['latin']}:{nameDict['german']},{nameDict['english']}\n")
-
+if not os.path.exists("birdNames.txt") and has_internet():
+    create_base_files()
+elif not os.path.exists("birdNames.txt") and not has_internet():
+    if language == "eng":
+        print("Can't create birdNames.txt without internet connection")
+    elif language == "deu":
+        print("birdNames.txt kann ohne Internet nicht erstellt werden")
+elif not os.path.exists("learningBirds.txt"):
+    create_learning_list()
+else:
+    pass
