@@ -1,0 +1,3 @@
+Dendrocopos major:92,
+Prunella modularis:5,2,
+Phylloscopus collybita:74,10,9,4,

@@ -5,6 +5,7 @@ import random
 
 def create_base_files():
     bird_numbers = {}
+    learning_numbers = []
     os.chdir("BirdSounds")
     text_files = glob.glob("*.txt")
     os.chdir("..")
@@ -33,12 +34,15 @@ def create_base_files():
             for number in bird_numbers[key]:
                 file.write(f"{number},")
             file.write("\n")
-
-
-def create_learning_list():
-    with open("birdNames.txt", "r") as readFile:
-        bird_lines = readFile.readlines()
-        bird_randoms = random.sample(bird_lines, 3)
-    with open("learningBirds.txt", "w") as writeFile:
-        for line in bird_randoms:
-            writeFile.write(line)
+    start_birds = random.sample(list(bird_numbers.keys()), 3)
+    with open("learningBirds.txt", "w") as file:
+        for k in range(len(start_birds)):
+            file.write(f"{start_birds[k]}:")
+            for j in (bird_numbers[start_birds[k]]):
+                file.write(f"{j},")
+                learning_numbers.append(j)
+            file.write("\n")
+    base_probability = 1/len(learning_numbers)
+    with open("probabilities.txt", "w") as file:
+        for k in learning_numbers:
+            file.write(f"{k}:{base_probability}\n")

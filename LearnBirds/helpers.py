@@ -67,3 +67,9 @@ def get_bird_number(file_name):
     start_index = file_name.find("recording_") + len("recording_")
     end_index = file_name.find(".")
     return file_name[start_index:end_index]
+
+def increment_array(array_in, entry):
+    array_in[1:] = array_in[:-1]
+    array_in[0] = entry
+    return array_in
+    
