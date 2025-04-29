@@ -1,6 +1,6 @@
 import glob
 from helpers import get_bird_number, has_internet, missingGermanNames, increment_array
-from setup import get_name_dict, get_number_arrays, get_probabs
+from setup import get_name_dict, get_number_arrays, get_probabs, get_learning_birds
 import os
 from initiate import create_base_files
 import random
@@ -23,14 +23,17 @@ elif not os.path.exists("birdNames.txt") and not has_internet():
         print("birdNames.txt kann ohne Internet nicht erstellt werden")
 else:
     birdNameDict = get_name_dict()
+    learningNames = get_learning_birds()
     possible_inputs = []
     if language == "deu":
         for key in birdNameDict.keys():
-            possible_inputs.append(birdNameDict[key][0])
+            if key in learningNames:
+                possible_inputs.append(birdNameDict[key][0])
     elif language == "eng":
         for key in birdNameDict.keys():
-            possible_inputs.append(birdNameDict[key][1])
-    numberList, nameList = get_number_arrays()
+            if key in learningNames:
+                possible_inputs.append(birdNameDict[key][1])
+    nameList, numberList = get_number_arrays()
     numbers, probabilities = get_probabs()
     os.chdir("BirdSounds")
     textFiles = glob.glob("*.wav")
@@ -41,9 +44,12 @@ else:
             audioFile = textFiles[k]
             break
     audio = AudioSegment.from_file(audioFile, format="wav")
-    # play(audio)
-    # print(nameList)
-    # print(numberList)
+    play(audio)
+    print(nr)
+    nrIndex = np.where(numberList == nr)
+    print(numberList)
+    print(nameList)
+    print(nameList[nrIndex])
     if language == "deu":
         user_input = input("Welcher Vogel sang das gegebene?:\n")
     elif language == "eng":
@@ -52,7 +58,7 @@ else:
     # Get the best match with a score
     best_match, score = process.extractOne(user_input, possible_inputs)
 
-    if score > 70:  # Adjust threshold as needed
+    if score > 90:  # Adjust threshold as needed
         print(f"Did you mean '{best_match}'? (Confidence: {score}%)")
     else:
         print("No good match found.")

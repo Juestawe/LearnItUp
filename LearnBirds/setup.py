@@ -23,6 +23,16 @@ def get_name_dict():
         name_dict[line[:colon_index]] = [line[1+colon_index:comma_index], line[1+comma_index:-1]]
     return name_dict
 
+
+def get_learning_birds():
+    names = []
+    with open("learningBirds.txt") as learning_file:
+        learning_lines = learning_file.readlines()
+    for line in learning_lines:
+        names.append(line[:line.find(":")])
+    return names
+
+
 def get_number_arrays():
     number_list = np.array([])
     name_list = np.array([])
